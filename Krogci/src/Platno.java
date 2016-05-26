@@ -5,16 +5,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Platno extends JPanel implements MouseMotionListener, ActionListener {
 	List<Krogec> krogci;
 	private GlavnoOkno glavnoOkno;
 	private OdpiranjeSlike odpiranjeSlike;
-	OdpiranjeSlike slika = new OdpiranjeSlike("Golden_ratio_line.png");
+	
+
+
 	
 	public Platno(GlavnoOkno glavno) {
 		super();
@@ -52,19 +57,43 @@ public class Platno extends JPanel implements MouseMotionListener, ActionListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.glavnoOkno.getOdpriMenu()) {
+			final JFileChooser fc = new JFileChooser();
+			int returnVal = fc.showOpenDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+	     		OdpiranjeSlike slika = new OdpiranjeSlike(file.getName());
+			}
+		}
+		else if 
+			(e.getSource() == this.glavnoOkno.getKrogciMenu()) {
+
+				
+				//TODO	//Kaj se zgodi, ko kliknemo Krogci		
+				//this.krogci = new ArrayList<Krogec>();
+				//super.repaint();
+		}	
 	//		this.odpiranjeSlike.image("Golden_ratio_line.png");  ASISTENT
 			//Kaj se zgodi, ko kliknemo ODPRI
 //			this.krogci = new ArrayList<Krogec>();
-//			super.repaint();
-		}		
-	}
-	
-	public void actionPerformed1(ActionEvent e) {
-		if (e.getSource() == this.glavnoOkno.getKrogciMenu()) {
+//			super.repaint();       !!!!!!!!!! OdpiranjeSlike slika = 
 			
-			//TODO	//Kaj se zgodi, ko kliknemo Krogci		
-			//this.krogci = new ArrayList<Krogec>();
-			//super.repaint();
-		}	
-		}
-	}
+			//FILECHOOSER
+		}	}	
+	
+//	public void actionPerformed(ActionEvent e) {
+//	    //Handle open button action.
+//	    if (e.getSource() == this.glavnoOkno.getOdpriMenu()) {
+//	        int returnVal = fc.showOpenDialog(FileChooserDemo.this);
+//
+//	        if (returnVal == JFileChooser.APPROVE_OPTION) {
+//	            File file = fc.getSelectedFile();
+//	            //This is where a real application would open the file.
+//	            log.append("Opening: " + file.getName() + "." + newline);
+//	        } else {
+//	            log.append("Open command cancelled by user." + newline);
+//	        }
+//	   } ...
+//	}
+	
+
+
