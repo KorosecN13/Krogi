@@ -61,7 +61,8 @@ public class Platno extends JPanel implements MouseMotionListener, ActionListene
 			int returnVal = fc.showOpenDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-	     		OdpiranjeSlike slika = new OdpiranjeSlike(file.getName());
+				System.out.println(file.getName()); // file je celotna pot, file.getName() je zgolj ime
+	     		OdpiranjeSlike slika = new OdpiranjeSlike(file.getName()); // predn sliko odpreš, nujno dat v isto mapo
 			}
 		}
 		else if 
