@@ -23,9 +23,12 @@ import javax.swing.KeyStroke;
 public class GlavnoOkno extends JFrame implements ActionListener {
 
 	private OriginalnoPlatno prvotnaSlika;
-	private UstvarjalnoPlatno krogciSlika;
+	private UstvarjalnoPlatno obdelanaSlika;
 	private JMenuItem odpriSlikoMenu;
 	private JMenuItem krogciMenu;
+	private JMenuItem zamenjajMenu;
+	private JMenuItem beleMenu;
+	private JMenuItem crneMenu;
 	BufferedImage prenosslike;
 	BufferedImage imag;
 	File poiscifile;
@@ -60,8 +63,9 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 
 		prvotnaSlika = new OriginalnoPlatno();
 		this.getContentPane().add(prvotnaSlika);
-		krogciSlika = new UstvarjalnoPlatno();
-		this.getContentPane().add(krogciSlika);
+		obdelanaSlika = new UstvarjalnoPlatno();
+		this.getContentPane().add(obdelanaSlika);
+
 		
 		// Dodamo menu
 		JMenuBar menuBar = new JMenuBar();
@@ -70,6 +74,13 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		menuBar.add(odpriSlikoMenu);
 		this.krogciMenu = new JMenuItem("Krogci", KeyEvent.VK_K);
 		menuBar.add(krogciMenu);
+		this.zamenjajMenu = new JMenuItem("Zamenjaj RGB", KeyEvent.VK_L);
+		menuBar.add(zamenjajMenu);
+		this.beleMenu = new JMenuItem("Pobeli", KeyEvent.VK_B);
+		menuBar.add(beleMenu);
+		this.crneMenu = new JMenuItem("Poèrni", KeyEvent.VK_C);
+		menuBar.add(crneMenu);
+		
 
 		
 		this.odpriSlikoMenu.setAccelerator(KeyStroke.getKeyStroke(
@@ -79,6 +90,18 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		this.krogciMenu.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_K, ActionEvent.ALT_MASK));
 		this.getKrogciMenu().addActionListener(this);
+		
+		this.zamenjajMenu.setAccelerator(KeyStroke.getKeyStroke(
+		        KeyEvent.VK_L, ActionEvent.ALT_MASK));
+		this.getZamenjajMenu().addActionListener(this);
+		
+		this.beleMenu.setAccelerator(KeyStroke.getKeyStroke(
+		        KeyEvent.VK_B, ActionEvent.ALT_MASK));
+		this.getBeleMenu().addActionListener(this);
+		
+		this.crneMenu.setAccelerator(KeyStroke.getKeyStroke(
+		        KeyEvent.VK_L, ActionEvent.ALT_MASK));
+		this.getCrneMenu().addActionListener(this);
 		
 //		// Dodamo opcijo Krogci
 //		JMenuBar menuBar1 = new JMenuBar();
@@ -101,6 +124,19 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		return this.krogciMenu;	
 	}
 	
+	public JMenuItem getZamenjajMenu() {
+		return this.zamenjajMenu;
+	}
+	
+	public JMenuItem getBeleMenu() {
+		return this.beleMenu;
+	}
+	
+	public JMenuItem getCrneMenu() {
+		return this.crneMenu;
+		
+	}
+	
 	static BufferedImage Kopija(BufferedImage bi) {
 		 ColorModel cm = bi.getColorModel();
 		 boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
@@ -116,7 +152,6 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			System.out.println(fc.getSelectedFile());
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				try {
-					poiscifile = fc.getSelectedFile();
 				    BufferedImage img = ImageIO.read(fc.getSelectedFile());
 					prenosslike = Kopija(img);
 				    prvotnaSlika.setSlika(img);
@@ -124,23 +159,32 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 				}
 			}
 		}
-		else if (e.getSource() == getKrogciMenu()) {
+		else if (e.getSource() == getZamenjajMenu()) {
 			BufferedImage img = prenosslike;
-			Manipulacija.manipulacija(img);
-			System.out.println("do sem pridem");
-			System.out.println(img);
-			krogciSlika.setBackground(Color.red);
-			
-			try {
-				BufferedImage imag = ImageIO.read(poiscifile);
-			} catch (IOException e1) {
-				System.out.println("napaka!");
-				e1.printStackTrace();
-			}
-			krogciSlika.setSlika(imag);
-			krogciSlika.setSlika(img);
+			SpremembaRGB.manipulacija(img);
+			obdelanaSlika.setBackground(Color.red);
+			obdelanaSlika.setSlika(img);
 			
 			
 		}
+		else if (e.getSource() == getBeleMenu()) {
+			BufferedImage img = prenosslike;
+			BelePike.belepike(img);
+			obdelanaSlika.setSlika(img);
+			
+		}
+		
+		else if (e.getSource() == getCrneMenu()) {
+			BufferedImage img = prenosslike;
+			CrnePike.crnepike(img);
+			obdelanaSlika.setSlika(img);
+			
+		}
+		else if (e.getSource() == getKrogciMenu()) {
+			BufferedImage img = prenosslike;
+			obdelanaSlika.setSlika(img);
+			
+		}
+		
 	}
 }

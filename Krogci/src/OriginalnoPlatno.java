@@ -10,7 +10,7 @@ public class OriginalnoPlatno extends JPanel {
 	
 	public OriginalnoPlatno() {
 		super();
-		this.setBackground(Color.red);
+		this.setBackground(Color.black);
 	}
 
 	@Override
@@ -18,7 +18,7 @@ public class OriginalnoPlatno extends JPanel {
 		if (slika != null) {
 			return new Dimension(slika.getWidth(), slika.getHeight());
 		}
-		return new Dimension(400, 300);
+		return new Dimension(500, 500);
 	}
 
 	@Override

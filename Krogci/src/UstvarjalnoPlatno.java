@@ -9,12 +9,12 @@ import javax.swing.JPanel;
 
 public class UstvarjalnoPlatno extends JPanel {
 private BufferedImage slika;
-Manipulacija m = new Manipulacija();
+SpremembaRGB m = new SpremembaRGB();
 	
 
 	public UstvarjalnoPlatno() {
 		super();
-		this.setBackground(Color.blue);
+		this.setBackground(Color.white);
 	}
 
 	@Override
@@ -22,7 +22,7 @@ Manipulacija m = new Manipulacija();
 		if (slika != null) {
 			return new Dimension(slika.getWidth(), slika.getHeight());
 		}
-		return new Dimension(400, 300);
+		return new Dimension(500, 500);
 	}
 	@Override
 	protected void paintComponent(Graphics g) {

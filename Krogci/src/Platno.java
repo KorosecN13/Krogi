@@ -31,7 +31,7 @@ public class Platno extends JPanel implements MouseMotionListener, ActionListene
 
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(400, 300);
+		return new Dimension(500, 500);
 	}
 
 	@Override
