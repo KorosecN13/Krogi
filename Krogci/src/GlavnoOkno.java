@@ -1,9 +1,13 @@
+import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -22,6 +26,10 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	private UstvarjalnoPlatno krogciSlika;
 	private JMenuItem odpriSlikoMenu;
 	private JMenuItem krogciMenu;
+	BufferedImage prenosslike;
+	BufferedImage imag;
+	File poiscifile;
+	
 
 	public GlavnoOkno() throws HeadlessException {
 		super();
@@ -85,28 +93,54 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 
 	}
 
-	private JMenuItem getOdpriMenu() {
+	public JMenuItem getOdpriMenu() {
 		return this.odpriSlikoMenu;
 	}
 	
-	private JMenuItem getKrogciMenu() {
+	public JMenuItem getKrogciMenu() {
 		return this.krogciMenu;	
 	}
+	
+	static BufferedImage Kopija(BufferedImage bi) {
+		 ColorModel cm = bi.getColorModel();
+		 boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+		 WritableRaster raster = bi.copyData(null);
+		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+		}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == getOdpriMenu()) {
 			final JFileChooser fc = new JFileChooser();
 			int returnVal = fc.showOpenDialog(null);
+			System.out.println(fc.getSelectedFile());
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				try {
+					poiscifile = fc.getSelectedFile();
 				    BufferedImage img = ImageIO.read(fc.getSelectedFile());
+					prenosslike = Kopija(img);
 				    prvotnaSlika.setSlika(img);
 				} catch (IOException exc) {
 				}
 			}
 		}
-		else if (e.getSource() == getKrogciMenu()) {	
+		else if (e.getSource() == getKrogciMenu()) {
+			BufferedImage img = prenosslike;
+			Manipulacija.manipulacija(img);
+			System.out.println("do sem pridem");
+			System.out.println(img);
+			krogciSlika.setBackground(Color.red);
+			
+			try {
+				BufferedImage imag = ImageIO.read(poiscifile);
+			} catch (IOException e1) {
+				System.out.println("napaka!");
+				e1.printStackTrace();
+			}
+			krogciSlika.setSlika(imag);
+			krogciSlika.setSlika(img);
+			
+			
 		}
 	}
 }
