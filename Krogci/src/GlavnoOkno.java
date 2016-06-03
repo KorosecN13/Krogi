@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -17,7 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
+import javax.swing.ScrollPaneConstants;
 
 @SuppressWarnings("serial")
 public class GlavnoOkno extends JFrame implements ActionListener {
@@ -29,6 +32,8 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	private JMenuItem zamenjajMenu;
 	private JMenuItem beleMenu;
 	private JMenuItem crneMenu;
+	private JMenuItem zamegliMenu;
+	private JFrame okno;
 	BufferedImage prenosslike;
 	BufferedImage imag;
 	File poiscifile;
@@ -62,7 +67,10 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 //		
 
 		prvotnaSlika = new OriginalnoPlatno();
-		this.getContentPane().add(prvotnaSlika);
+		JScrollPane scrollPane = new JScrollPane(prvotnaSlika, 
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, 
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		this.getContentPane().add(scrollPane);
 		obdelanaSlika = new UstvarjalnoPlatno();
 		this.getContentPane().add(obdelanaSlika);
 
@@ -80,6 +88,9 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		menuBar.add(beleMenu);
 		this.crneMenu = new JMenuItem("Poèrni", KeyEvent.VK_C);
 		menuBar.add(crneMenu);
+		this.zamegliMenu = new JMenuItem("Zamegli", KeyEvent.VK_Z);
+		menuBar.add(zamegliMenu);
+		
 		
 
 		
@@ -100,8 +111,12 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		this.getBeleMenu().addActionListener(this);
 		
 		this.crneMenu.setAccelerator(KeyStroke.getKeyStroke(
-		        KeyEvent.VK_L, ActionEvent.ALT_MASK));
+		        KeyEvent.VK_C, ActionEvent.ALT_MASK));
 		this.getCrneMenu().addActionListener(this);
+		
+		this.zamegliMenu.setAccelerator(KeyStroke.getKeyStroke(
+		        KeyEvent.VK_Z, ActionEvent.ALT_MASK));
+		this.getZamegliMenu().addActionListener(this);
 		
 //		// Dodamo opcijo Krogci
 //		JMenuBar menuBar1 = new JMenuBar();
@@ -137,6 +152,11 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		
 	}
 	
+	public JMenuItem getZamegliMenu() {
+		return this.zamegliMenu;
+		
+	}
+	
 	static BufferedImage Kopija(BufferedImage bi) {
 		 ColorModel cm = bi.getColorModel();
 		 boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
@@ -154,6 +174,9 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 				try {
 				    BufferedImage img = ImageIO.read(fc.getSelectedFile());
 					prenosslike = Kopija(img);
+					prvotnaSlika.setSize(new Dimension(img.getWidth(), img.getHeight()));	
+					obdelanaSlika.setSize(new Dimension(img.getWidth(), img.getHeight()));	
+			//		okno.setPreferredSize(new Dimension(2 * img.getWidth(), img.getHeight()));
 				    prvotnaSlika.setSlika(img);
 				} catch (IOException exc) {
 				}
@@ -186,5 +209,12 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			
 		}
 		
+		else if (e.getSource() == getZamegliMenu()) {
+			BufferedImage img = prenosslike;
+			Zamegli.zamegli(img);
+			obdelanaSlika.setSlika(img);
+			
+		}
+		// DODAJ SCROLLPANE
 	}
 }

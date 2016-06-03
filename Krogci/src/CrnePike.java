@@ -25,7 +25,7 @@ public class CrnePike {
 			    rgb = (rgb << 8) + modra;
 			    
 			    if ((i+j)%2 == 0)	
-			    	slika.setRGB(i, j,  00000000);
+			    	slika.setRGB(i, j,  0x000000);
 			
 	}}}
 }

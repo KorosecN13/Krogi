@@ -16,7 +16,7 @@ public class BelePike {
 			    int rdeca = c.getRed();  
 			    int zelena = c.getGreen();
 			    int modra =  c.getBlue(); 
-			    int alfa = c.getAlpha(); 
+			    int alfa = c.getAlpha();
 			    
 			    
 			    
@@ -25,7 +25,7 @@ public class BelePike {
 			    rgb = (rgb << 8) + modra;
 			    
 			    if ((i+j)%2 == 0)	
-			    	slika.setRGB(i, j,  11111111);
+			    	slika.setRGB(i, j,  0xffffff);
 			
 	}}}
 }
