@@ -33,6 +33,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	private JMenuItem beleMenu;
 	private JMenuItem crneMenu;
 	private JMenuItem zamegliMenu;
+	private JMenuItem izostriMenu;
 	private JFrame okno;
 	BufferedImage prenosslike;
 	BufferedImage imag;
@@ -67,12 +68,16 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 //		
 
 		prvotnaSlika = new OriginalnoPlatno();
-		JScrollPane scrollPane = new JScrollPane(prvotnaSlika, 
+		JScrollPane scrollPane1 = new JScrollPane(prvotnaSlika, 
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, 
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		this.getContentPane().add(scrollPane);
+		this.getContentPane().add(scrollPane1);
+		
 		obdelanaSlika = new UstvarjalnoPlatno();
-		this.getContentPane().add(obdelanaSlika);
+		JScrollPane scrollPane2 = new JScrollPane(obdelanaSlika, 
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, 
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		this.getContentPane().add(scrollPane2);
 
 		
 		// Dodamo menu
@@ -90,6 +95,8 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		menuBar.add(crneMenu);
 		this.zamegliMenu = new JMenuItem("Zamegli", KeyEvent.VK_Z);
 		menuBar.add(zamegliMenu);
+		this.izostriMenu = new JMenuItem("Izostri", KeyEvent.VK_I);
+		menuBar.add(izostriMenu);
 		
 		
 
@@ -117,6 +124,10 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		this.zamegliMenu.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_Z, ActionEvent.ALT_MASK));
 		this.getZamegliMenu().addActionListener(this);
+		
+		this.izostriMenu.setAccelerator(KeyStroke.getKeyStroke(
+		        KeyEvent.VK_I, ActionEvent.ALT_MASK));
+		this.getIzostriMenu().addActionListener(this);
 		
 //		// Dodamo opcijo Krogci
 //		JMenuBar menuBar1 = new JMenuBar();
@@ -157,6 +168,11 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		
 	}
 	
+	public JMenuItem getIzostriMenu() {
+		return this.izostriMenu;
+		
+	}
+	
 	static BufferedImage Kopija(BufferedImage bi) {
 		 ColorModel cm = bi.getColorModel();
 		 boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
@@ -178,8 +194,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 					obdelanaSlika.setSize(new Dimension(img.getWidth(), img.getHeight()));	
 			//		okno.setPreferredSize(new Dimension(2 * img.getWidth(), img.getHeight()));
 				    prvotnaSlika.setSlika(img);
-				} catch (IOException exc) {
-				}
+				} catch (IOException exc) {}
 			}
 		}
 		else if (e.getSource() == getZamenjajMenu()) {
@@ -187,33 +202,35 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			SpremembaRGB.manipulacija(img);
 			obdelanaSlika.setBackground(Color.red);
 			obdelanaSlika.setSlika(img);
-			
-			
 		}
+		
 		else if (e.getSource() == getBeleMenu()) {
 			BufferedImage img = prenosslike;
 			BelePike.belepike(img);
-			obdelanaSlika.setSlika(img);
-			
+			obdelanaSlika.setSlika(img);	
 		}
 		
 		else if (e.getSource() == getCrneMenu()) {
 			BufferedImage img = prenosslike;
 			CrnePike.crnepike(img);
 			obdelanaSlika.setSlika(img);
-			
 		}
+		
 		else if (e.getSource() == getKrogciMenu()) {
 			BufferedImage img = prenosslike;
-			obdelanaSlika.setSlika(img);
-			
+			obdelanaSlika.setSlika(img);	
 		}
 		
 		else if (e.getSource() == getZamegliMenu()) {
 			BufferedImage img = prenosslike;
-			Zamegli.zamegli(img);
+			Zamegli.zamegli(img, 3);
 			obdelanaSlika.setSlika(img);
-			
+		}
+		
+		else if (e.getSource() == getIzostriMenu()) {
+			BufferedImage img = prenosslike;
+			Izostri.izostri(img, 3);
+			obdelanaSlika.setSlika(img);
 		}
 		// DODAJ SCROLLPANE
 	}
