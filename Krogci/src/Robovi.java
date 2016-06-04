@@ -3,7 +3,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 
-public class Izostri {
+public class Robovi {
 	//2. matrika je jedro, sicer se koeficient napiše drugaè
 	public static double konvolucija(int[][] matrika1, int[][] matrika2, int velikostmatrike){
 		double sestevek = 0;
@@ -12,7 +12,7 @@ public class Izostri {
 				sestevek += matrika1[i][j]*matrika2[velikostmatrike-1-i][velikostmatrike-1-j];
 			}
 		}
-		return (sestevek/2);
+		return (sestevek/3);
 	}
 
 	static BufferedImage Kopija(BufferedImage bi) {
@@ -23,13 +23,13 @@ public class Izostri {
 		}
 	
 	
-	public static void izostri(BufferedImage slika, int vjedra){
+	public static void robovi(BufferedImage slika, int vjedra){
 		int sirina = slika.getWidth();	
 		int visina = slika.getHeight();
 		int velikostJedra = vjedra;
-		int[][] jedro = {{0,-1,0},
-				 		{-1,5,-1},
-				 		{0,-1,0}};
+		int[][] jedro = {{-1,-1,-1},
+				 		{-1,8,-1},
+				 		{-1,-1,-1}};
 		BufferedImage kopija = Kopija(slika);
 		double maksimum = 0;
 				
@@ -67,6 +67,4 @@ public class Izostri {
 			}
 		}
 		System.out.println(maksimum);
-	}
-	
-}
+	}}
