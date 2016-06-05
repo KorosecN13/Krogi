@@ -3,8 +3,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 
 @SuppressWarnings("serial")
 public class OriginalnoPlatno extends JPanel {

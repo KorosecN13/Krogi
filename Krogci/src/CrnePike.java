@@ -15,8 +15,7 @@ public class CrnePike {
 			
 			    int rdeca = c.getRed();  
 			    int zelena = c.getGreen();
-			    int modra =  c.getBlue(); 
-			    int alfa = c.getAlpha(); 
+			    int modra =  c.getBlue();  
 			    
 			    
 			    

@@ -1,12 +1,12 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 public class UstvarjalnoPlatno extends JPanel {
 private BufferedImage slika;
 SpremembaRGB m = new SpremembaRGB();

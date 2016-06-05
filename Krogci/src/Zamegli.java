@@ -26,14 +26,7 @@ public class Zamegli {
 				
 		for(int i = (velikostJedra-1)/2; i < sirina-(velikostJedra-1)/2; i++){
 			for(int j = (velikostJedra-1)/2; j < visina-(velikostJedra-1)/2; j++){
-		
-				int podatek =	slika.getRGB(i, j);
-			    Color c = new Color(podatek);
-			
-			    int rdeca = c.getRed();  
-			    int zelena = c.getGreen();
-			    int modra =  c.getBlue(); 
-			    int alfa = c.getAlpha();
+
 
 			    //matrike, ki predstavljajo povpreèno kolièino rgb barv v okolici toèke i,j
 			    int[][] rdecaMatrika = new int[velikostJedra][velikostJedra];

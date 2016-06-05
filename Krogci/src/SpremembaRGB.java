@@ -17,14 +17,13 @@ public class SpremembaRGB {
 			    int rdeca = c.getRed();  
 			    int zelena = c.getGreen();
 			    int modra =  c.getBlue(); 
-			    int alfa = c.getAlpha(); 
 			    
 			    int modra1 = modra;
 			    int zelena1 = zelena;
 			    int rdeca1 = rdeca;
-			    modra = rdeca;
-			    rdeca = zelena;
-			    zelena = modra;
+			    modra = rdeca1;
+			    rdeca = zelena1;
+			    zelena = modra1;
 			    
 			    int rgb = rdeca;
 			    rgb = (rgb << 8) + zelena;

@@ -12,12 +12,10 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
@@ -28,15 +26,16 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	private OriginalnoPlatno prvotnaSlika;
 	private UstvarjalnoPlatno obdelanaSlika;
 	private JMenuItem odpriSlikoMenu;
-	private JMenuItem krogciMenu;
+	private JMenuItem ponastaviMenu;
+	private JMenuItem novEfektMenu;
 	private JMenuItem zamenjajMenu;
 	private JMenuItem beleMenu;
 	private JMenuItem crneMenu;
 	private JMenuItem zamegliMenu;
 	private JMenuItem izostriMenu;
-	private JFrame okno;
 	BufferedImage prenosslike;
 	BufferedImage imag;
+	BufferedImage zaponastavitev;
 	File poiscifile;
 	
 
@@ -45,27 +44,6 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		this.setTitle("Programèek");
 		this.setLayout(new GridBagLayout());
 	
-//		JPanel container = new JPanel();
-//		container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
-//
-//		JPanel panel1 = new OriginalnoPlatno();
-//		JPanel panel2 = new UstvarjalnoPlatno();
-//
-//		panel1.setSize(400, 320);
-//		panel2.setSize(300, 450);
-//		
-////		panel1.setVisible(True);
-////		panel2.setVisible(True);
-////		
-////		
-//
-//		container.add(panel1);
-//		container.add(panel2);
-//		
-//		panel1.setVisible(true);
-//		panel2.setVisible(true);
-//		
-//		
 
 		prvotnaSlika = new OriginalnoPlatno();
 		JScrollPane scrollPane1 = new JScrollPane(prvotnaSlika, 
@@ -85,8 +63,10 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		this.setJMenuBar(menuBar);
 		this.odpriSlikoMenu = new JMenuItem("Odpri", KeyEvent.VK_O);
 		menuBar.add(odpriSlikoMenu);
-		this.krogciMenu = new JMenuItem("Krogci", KeyEvent.VK_K);
-		menuBar.add(krogciMenu);
+		this.ponastaviMenu = new JMenuItem("Ponastavi", KeyEvent.VK_O);
+		menuBar.add(ponastaviMenu);
+		this.novEfektMenu = new JMenuItem("Nov efekt", KeyEvent.VK_K);
+		menuBar.add(novEfektMenu);
 		this.zamenjajMenu = new JMenuItem("Zamenjaj RGB", KeyEvent.VK_L);
 		menuBar.add(zamenjajMenu);
 		this.beleMenu = new JMenuItem("Pobeli", KeyEvent.VK_B);
@@ -105,9 +85,13 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		        KeyEvent.VK_O, ActionEvent.ALT_MASK));
 		this.getOdpriMenu().addActionListener(this);
 	
-		this.krogciMenu.setAccelerator(KeyStroke.getKeyStroke(
+		this.ponastaviMenu.setAccelerator(KeyStroke.getKeyStroke(
+		        KeyEvent.VK_O, ActionEvent.ALT_MASK));
+		this.getPonastaviMenu().addActionListener(this);
+		
+		this.novEfektMenu.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_K, ActionEvent.ALT_MASK));
-		this.getKrogciMenu().addActionListener(this);
+		this.getNovEfekt().addActionListener(this);
 		
 		this.zamenjajMenu.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_L, ActionEvent.ALT_MASK));
@@ -128,17 +112,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		this.izostriMenu.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_I, ActionEvent.ALT_MASK));
 		this.getIzostriMenu().addActionListener(this);
-		
-//		// Dodamo opcijo Krogci
-//		JMenuBar menuBar1 = new JMenuBar();
-//		this.setJMenuBar(menuBar1);
-//		this.krogciMenu = new JMenuItem("Krogci", KeyEvent.VK_K);
-//		menuBar1.add(krogciMenu);
-//
-//		this.krogciMenu.setAccelerator(KeyStroke.getKeyStroke(
-//		        KeyEvent.VK_K, ActionEvent.ALT_MASK));
-//		this.getZbrisiMenu().addActionListener(this.platno);
-		
+
 
 	}
 
@@ -146,8 +120,12 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		return this.odpriSlikoMenu;
 	}
 	
-	public JMenuItem getKrogciMenu() {
-		return this.krogciMenu;	
+	public JMenuItem getPonastaviMenu() {
+		return this.ponastaviMenu;
+	}
+	
+	public JMenuItem getNovEfekt() {
+		return this.novEfektMenu;	
 	}
 	
 	public JMenuItem getZamenjajMenu() {
@@ -190,6 +168,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 				try {
 				    BufferedImage img = ImageIO.read(fc.getSelectedFile());
 					prenosslike = Kopija(img);
+					zaponastavitev = Kopija(img);
 					prvotnaSlika.setSize(new Dimension(img.getWidth(), img.getHeight()));	
 					obdelanaSlika.setSize(new Dimension(img.getWidth(), img.getHeight()));	
 			//		okno.setPreferredSize(new Dimension(2 * img.getWidth(), img.getHeight()));
@@ -197,10 +176,14 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 				} catch (IOException exc) {}
 			}
 		}
+		else if (e.getSource() == getPonastaviMenu()) {
+			BufferedImage img = zaponastavitev;
+			prenosslike = Kopija(zaponastavitev);
+			obdelanaSlika.setSlika(img);
+		}
 		else if (e.getSource() == getZamenjajMenu()) {
 			BufferedImage img = prenosslike;
 			SpremembaRGB.manipulacija(img);
-			obdelanaSlika.setBackground(Color.red);
 			obdelanaSlika.setSlika(img);
 		}
 		
@@ -216,8 +199,9 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			obdelanaSlika.setSlika(img);
 		}
 		
-		else if (e.getSource() == getKrogciMenu()) {
+		else if (e.getSource() == getNovEfekt()) {
 			BufferedImage img = prenosslike;
+			NovEfekt.novEfekt(img, 3);
 			obdelanaSlika.setSlika(img);	
 		}
 		
@@ -232,6 +216,8 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			Izostri.izostri(img, 3);
 			obdelanaSlika.setSlika(img);
 		}
-		// DODAJ SCROLLPANE
+		
+		
+
 	}
 }
