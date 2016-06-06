@@ -12,7 +12,7 @@ public class Robovi {
 				sestevek += matrika1[i][j]*matrika2[velikostmatrike-1-i][velikostmatrike-1-j];
 			}
 		}
-		return (sestevek/3);
+		return (sestevek/2);
 	}
 
 	static BufferedImage Kopija(BufferedImage bi) {
@@ -27,9 +27,18 @@ public class Robovi {
 		int sirina = slika.getWidth();	
 		int visina = slika.getHeight();
 		int velikostJedra = vjedra;
-		int[][] jedro = {{-1,-1,-1},
-				 		{-1,8,-1},
-				 		{-1,-1,-1}};
+//		int[][] jedro = {{0,0,0},
+//				 		{0,4,0},
+//				 		{0,0,0}};
+		int[][] jedro = {{0,0,1,0,0},
+						{0,0,0,0,0},
+						{0,1,-4,1,0},
+						{0,0,0,0,0},
+						{0,0,1,0,0}};
+//		int[][] jedro = {{0,1,0},
+//				{1,-4,1},
+//				{0,1,0}};
+	
 		BufferedImage kopija = Kopija(slika);
 		double maksimum = 0;
 				
@@ -50,9 +59,9 @@ public class Robovi {
 			    	}
 			    }
 			 
-			    double rdeca1 = konvolucija(rdecaMatrika, jedro, 3);
-			    double modra1 = konvolucija(modraMatrika, jedro, 3);
-			    double zelena1 = konvolucija(zelenaMatrika, jedro, 3);
+			    double rdeca1 = konvolucija(rdecaMatrika, jedro, velikostJedra);
+			    double modra1 = konvolucija(modraMatrika, jedro, velikostJedra);
+			    double zelena1 = konvolucija(zelenaMatrika, jedro, velikostJedra);
 			    if (rdeca1 > maksimum){
 			    	maksimum = rdeca1;}
 			    if (zelena1 > maksimum){

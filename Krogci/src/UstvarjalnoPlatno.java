@@ -2,7 +2,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 
@@ -37,4 +40,14 @@ SpremembaRGB m = new SpremembaRGB();
 		slika = img;
 		repaint();
 	}
+	
+    public void save(BufferedImage img) throws IOException{
+        ImageIO.write(img, "PNG", new File("filename.png"));
+    }
+
+    public void load() throws IOException {
+        BufferedImage paintImage = ImageIO.read(new File("filename.png"));
+        // update panel with new paint image
+        repaint();
+    }
 }

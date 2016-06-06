@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 
-public class NovEfekt {
+public class NakljucniEfekt {
 	//2. matrika je jedro, sicer se koeficient napiše drugaè
 	public static double konvolucija(int[][] matrika1, int[][] matrika2, int velikostmatrike){
 		double sestevek = 0;
@@ -24,7 +24,7 @@ public class NovEfekt {
 		}
 	
 	
-	public static void novEfekt(BufferedImage slika, int vjedra){
+	public static void nakljucniEfekt(BufferedImage slika, int vjedra){
 		int sirina = slika.getWidth();	
 		int visina = slika.getHeight();
 		int velikostJedra = vjedra;
@@ -32,15 +32,20 @@ public class NovEfekt {
 		int vsota = 0;
 
 
-		int[][] jedro = {{-2,0,0},
-				 		{0,4,0},
-				 		{0,0,-2}};
-//
-//		int[][] jedro = {{0,0,0},
-//				 		{1,1,1},
-//				 		{1,1,1}};
-
-
+//		int[][] jedro = {{-2,0,0},
+//				 		{0,4,0},
+//				 		{0,0,-2}};
+		int[][] jedroMatrika = new int[velikostJedra][velikostJedra];
+		for (int t = 0; t < velikostJedra; t++){
+			for (int r = 0; r < velikostJedra; r++){
+				if (t != (velikostJedra-1)/2 || r != (velikostJedra-1)/2)
+					a = ThreadLocalRandom.current().nextInt(-5, 5);
+					jedroMatrika[t][r] = a;
+					vsota +=a;
+			}
+		}
+		jedroMatrika[(velikostJedra-1)/2][(velikostJedra-1)/2] = -(vsota);
+		
 		BufferedImage kopija = Kopija(slika);
 		double maksimum = 0;
 				
@@ -61,18 +66,18 @@ public class NovEfekt {
 			    	}
 			    }
 			 
-			    double rdeca1 = konvolucija(rdecaMatrika, jedro, 3);
-			    double modra1 = konvolucija(modraMatrika, jedro, 3);
-			    double zelena1 = konvolucija(zelenaMatrika, jedro, 3);
+			    double rdeca1 = konvolucija(rdecaMatrika, jedroMatrika, 3);
+			    double modra1 = konvolucija(modraMatrika, jedroMatrika, 3);
+			    double zelena1 = konvolucija(zelenaMatrika, jedroMatrika, 3);
 			    if (rdeca1 > maksimum){
 			    	maksimum = rdeca1;}
 			    if (zelena1 > maksimum){
 			    	maksimum = zelena1;}
 			    if (modra1 > maksimum){
 			    	maksimum = modra1;}
-			    int rgb = (int) Math.max(0,Math.min(255, rdeca1));
-			    rgb = (int) ((rgb << 8) + Math.max(0,Math.min(255, zelena1)));
-			    rgb = (int) ((rgb << 8) + Math.max(0,Math.min(255, modra1)));	
+			    int rgb = (int) rdeca1;
+			    rgb = (int) ((rgb << 8) + zelena1);
+			    rgb = (int) ((rgb << 8) + modra1);	
 			    slika.setRGB(i, j, rgb);
 			
 			}

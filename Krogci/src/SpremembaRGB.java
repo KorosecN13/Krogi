@@ -3,7 +3,7 @@ import java.awt.image.BufferedImage;
 
 public class SpremembaRGB {
 
-	public static void manipulacija(BufferedImage slika){
+	public static void spremembaRGB(BufferedImage slika){
 			
 		int sirina = slika.getWidth();	
 		int visina = slika.getHeight();
