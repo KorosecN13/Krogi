@@ -12,7 +12,7 @@ public class Izostri {
 				sestevek += matrika1[i][j]*matrika2[velikostmatrike-1-i][velikostmatrike-1-j];
 			}
 		}
-		return (sestevek/2);
+		return (sestevek);
 	}
 
 	static BufferedImage Kopija(BufferedImage bi) {
@@ -59,11 +59,10 @@ public class Izostri {
 			    	maksimum = zelena1;}
 			    if (modra1 > maksimum){
 			    	maksimum = modra1;}
-			    int rgb = (int) rdeca1;
-			    rgb = (int) ((rgb << 8) + zelena1);
-			    rgb = (int) ((rgb << 8) + modra1);	
+			    int rgb = (int) Math.max(0,Math.min(255, rdeca1));
+			    rgb = (int) ((rgb << 8) + Math.max(0,Math.min(255, zelena1)));
+			    rgb = (int) ((rgb << 8) + Math.max(0,Math.min(255, modra1)));	
 			    slika.setRGB(i, j, rgb);
-			
 			}
 		}
 		System.out.println(maksimum);

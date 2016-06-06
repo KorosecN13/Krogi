@@ -34,6 +34,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	private JMenuItem izostriMenu;
 	private JMenuItem roboviMenu;
 	private JMenuItem nakljucniMenu;
+	private JMenuItem nakljucniBrezFiltraMenu;
 	private JMenuItem shraniMenu;
 	BufferedImage prenosslike;
 	BufferedImage imag;
@@ -63,13 +64,13 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		// Dodamo menu
 		JMenuBar menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
-		this.odpriSlikoMenu = new JMenuItem("Odpri", KeyEvent.VK_O);
+		this.odpriSlikoMenu = new JMenuItem("Odpri");
 		menuBar.add(odpriSlikoMenu);
 		this.ponastaviMenu = new JMenuItem("Ponastavi", KeyEvent.VK_O);
 		menuBar.add(ponastaviMenu);
 		this.zamenjajMenu = new JMenuItem("Zamenjaj RGB", KeyEvent.VK_L);
 		menuBar.add(zamenjajMenu);
-		this.crneMenu = new JMenuItem("Poèrni", KeyEvent.VK_C);
+		this.crneMenu = new JMenuItem("Mreža", KeyEvent.VK_C);
 		menuBar.add(crneMenu);
 		this.zamegliMenu = new JMenuItem("Zamegli", KeyEvent.VK_Z);
 		menuBar.add(zamegliMenu);
@@ -81,6 +82,8 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		menuBar.add(novEfektMenu);
 		this.nakljucniMenu = new JMenuItem("Nakljuèni efekt", KeyEvent.VK_N);
 		menuBar.add(nakljucniMenu);
+		this.nakljucniBrezFiltraMenu = new JMenuItem("Abstraktno", KeyEvent.VK_N);
+		menuBar.add(nakljucniBrezFiltraMenu);
 		this.shraniMenu = new JMenuItem("Shrani", KeyEvent.VK_S);
 		menuBar.add(shraniMenu);
 		
@@ -88,8 +91,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		
 
 		
-		this.odpriSlikoMenu.setAccelerator(KeyStroke.getKeyStroke(
-		        KeyEvent.VK_O, ActionEvent.ALT_MASK));
+		
 		this.getOdpriMenu().addActionListener(this);
 	
 		this.ponastaviMenu.setAccelerator(KeyStroke.getKeyStroke(
@@ -123,6 +125,10 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		this.nakljucniMenu.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_N, ActionEvent.ALT_MASK));
 		this.getNakljucniMenu().addActionListener(this);
+		
+		this.nakljucniBrezFiltraMenu.setAccelerator(KeyStroke.getKeyStroke(
+		        KeyEvent.VK_N, ActionEvent.ALT_MASK));
+		this.getNakljucniBrezFiltraMenu().addActionListener(this);
 		
 		this.shraniMenu.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_N, ActionEvent.ALT_MASK));
@@ -172,6 +178,10 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	
 	public JMenuItem getNakljucniMenu() {
 		return this.nakljucniMenu;	
+	}
+	
+	public JMenuItem getNakljucniBrezFiltraMenu() {
+		return this.nakljucniBrezFiltraMenu;	
 	}
 	
 	public JMenuItem getShraniMenu() {
@@ -247,6 +257,12 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		else if (e.getSource() == getNakljucniMenu()) {
 			BufferedImage img = prenosslike;
 			NakljucniEfekt.nakljucniEfekt(img, 3);
+			obdelanaSlika.setSlika(img);
+		}
+		
+		else if (e.getSource() == getNakljucniBrezFiltraMenu()) {
+			BufferedImage img = prenosslike;
+			NakljucniEfekt.nakljucniBrezFiltra(img, 3);
 			obdelanaSlika.setSlika(img);
 		}
 		

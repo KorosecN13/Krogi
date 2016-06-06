@@ -13,7 +13,7 @@ public class NakljucniEfekt {
 				sestevek += matrika1[i][j]*matrika2[velikostmatrike-1-i][velikostmatrike-1-j];
 			}
 		}
-		return (sestevek/2);
+		return (sestevek);
 	}
 
 	static BufferedImage Kopija(BufferedImage bi) {
@@ -75,9 +75,70 @@ public class NakljucniEfekt {
 			    	maksimum = zelena1;}
 			    if (modra1 > maksimum){
 			    	maksimum = modra1;}
+			    int rgb = (int) Math.max(0,Math.min(255, rdeca1));
+			    rgb = (int) ((rgb << 8) + Math.max(0,Math.min(255, zelena1)));
+			    rgb = (int) ((rgb << 8) + Math.max(0,Math.min(255, modra1)));	
+			    slika.setRGB(i, j, rgb);
+			
+			}
+		}
+		System.out.println(maksimum);
+	}
+	
+	public static void nakljucniBrezFiltra(BufferedImage slika, int vjedra){
+		int sirina = slika.getWidth();	
+		int visina = slika.getHeight();
+		int velikostJedra = vjedra;
+		int a = 0;
+		int vsota = 0;
+
+
+//		int[][] jedro = {{-2,0,0},
+//				 		{0,4,0},
+//				 		{0,0,-2}};
+		int[][] jedroMatrika = new int[velikostJedra][velikostJedra];
+		for (int t = 0; t < velikostJedra; t++){
+			for (int r = 0; r < velikostJedra; r++){
+				if (t != (velikostJedra-1)/2 || r != (velikostJedra-1)/2)
+					a = ThreadLocalRandom.current().nextInt(-5, 5);
+					jedroMatrika[t][r] = a;
+					vsota +=a;
+			}
+		}
+		jedroMatrika[(velikostJedra-1)/2][(velikostJedra-1)/2] = -(vsota);
+		
+		BufferedImage kopija = Kopija(slika);
+		double maksimum = 0;
+				
+		for(int i = (velikostJedra-1)/2; i < sirina-(velikostJedra-1)/2; i++){
+			for(int j = (velikostJedra-1)/2; j < visina-(velikostJedra-1)/2; j++){
+		
+			    
+			    int[][] rdecaMatrika = new int[velikostJedra][velikostJedra];
+			    int[][] modraMatrika = new int[velikostJedra][velikostJedra];
+			    int[][] zelenaMatrika = new int[velikostJedra][velikostJedra];
+			    
+			    for (int m = -(velikostJedra-1)/2; m < (velikostJedra+1)/2; m++){
+			    	for (int n = -(velikostJedra-1)/2; n < (velikostJedra+1)/2; n++){   	
+			    		Color d = new Color(kopija.getRGB(i+m,j+n));
+			    		rdecaMatrika[m +(velikostJedra-1)/2 ][n + (velikostJedra-1)/2] = d.getRed();
+			    		zelenaMatrika[m +(velikostJedra-1)/2][n + (velikostJedra-1)/2] = d.getGreen();
+			    		modraMatrika[m +(velikostJedra-1)/2][n + (velikostJedra-1)/2] = d.getBlue();
+			    	}
+			    }
+			 
+			    double rdeca1 = (konvolucija(rdecaMatrika, jedroMatrika, 3))/2;
+			    double modra1 = (konvolucija(modraMatrika, jedroMatrika, 3))/2;
+			    double zelena1 = (konvolucija(zelenaMatrika, jedroMatrika, 3))/2;
+			    if (rdeca1 > maksimum){
+			    	maksimum = rdeca1;}
+			    if (zelena1 > maksimum){
+			    	maksimum = zelena1;}
+			    if (modra1 > maksimum){
+			    	maksimum = modra1;}
 			    int rgb = (int) rdeca1;
-			    rgb = (int) ((rgb << 8) + zelena1);
-			    rgb = (int) ((rgb << 8) + modra1);	
+			    rgb = (int) ((rgb << 8) +  zelena1);
+			    rgb = (int) ((rgb << 8) +  modra1);	
 			    slika.setRGB(i, j, rgb);
 			
 			}

@@ -60,7 +60,7 @@ public class NovEfekt {
 			    		modraMatrika[m +(velikostJedra-1)/2][n + (velikostJedra-1)/2] = d.getBlue();
 			    	}
 			    }
-			 
+			    
 			    double rdeca1 = konvolucija(rdecaMatrika, jedro, 3);
 			    double modra1 = konvolucija(modraMatrika, jedro, 3);
 			    double zelena1 = konvolucija(zelenaMatrika, jedro, 3);
@@ -70,10 +70,11 @@ public class NovEfekt {
 			    	maksimum = zelena1;}
 			    if (modra1 > maksimum){
 			    	maksimum = modra1;}
-			    int rgb = (int) Math.max(0,Math.min(255, rdeca1));
-			    rgb = (int) ((rgb << 8) + Math.max(0,Math.min(255, zelena1)));
-			    rgb = (int) ((rgb << 8) + Math.max(0,Math.min(255, modra1)));	
+			    int rgb = (int) rdeca1;
+			    rgb = (int) ((rgb << 8) + zelena1);
+			    rgb = (int) ((rgb << 8) + modra1);	
 			    slika.setRGB(i, j, rgb);
+			
 			
 			}
 		}
