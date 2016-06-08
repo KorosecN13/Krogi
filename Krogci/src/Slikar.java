@@ -7,5 +7,4 @@ public class Slikar {
 		okno.pack();
 		okno.setVisible(true);
 	}
-
 }

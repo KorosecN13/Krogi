@@ -5,7 +5,7 @@ import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 
 public class NakljucniEfekt {
-	//2. matrika je jedro, sicer se koeficient napiše drugaè
+	//2. matrika bo jedro
 	public static double konvolucija(int[][] matrika1, int[][] matrika2, int velikostmatrike){
 		double sestevek = 0;
 		for (int i = 0; i < velikostmatrike; i++){
@@ -23,7 +23,6 @@ public class NakljucniEfekt {
 		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 		}
 	
-	
 	public static void nakljucniEfekt(BufferedImage slika, int vjedra){
 		int sirina = slika.getWidth();	
 		int visina = slika.getHeight();
@@ -31,10 +30,7 @@ public class NakljucniEfekt {
 		int a = 0;
 		int vsota = 0;
 
-
-//		int[][] jedro = {{-2,0,0},
-//				 		{0,4,0},
-//				 		{0,0,-2}};
+		//Algoritem za generiranje matrike iz nakljuènih števil z vsoto 0
 		int[][] jedroMatrika = new int[velikostJedra][velikostJedra];
 		for (int t = 0; t < velikostJedra; t++){
 			for (int r = 0; r < velikostJedra; r++){
@@ -92,15 +88,11 @@ public class NakljucniEfekt {
 		int a = 0;
 		int vsota = 0;
 
-
-//		int[][] jedro = {{-2,0,0},
-//				 		{0,4,0},
-//				 		{0,0,-2}};
 		int[][] jedroMatrika = new int[velikostJedra][velikostJedra];
 		for (int t = 0; t < velikostJedra; t++){
 			for (int r = 0; r < velikostJedra; r++){
 				if (t != (velikostJedra-1)/2 || r != (velikostJedra-1)/2)
-					a = ThreadLocalRandom.current().nextInt(-5, 5);
+					a = ThreadLocalRandom.current().nextInt(-10, 10);
 					jedroMatrika[t][r] = a;
 					vsota +=a;
 			}
@@ -113,7 +105,6 @@ public class NakljucniEfekt {
 		for(int i = (velikostJedra-1)/2; i < sirina-(velikostJedra-1)/2; i++){
 			for(int j = (velikostJedra-1)/2; j < visina-(velikostJedra-1)/2; j++){
 		
-			    
 			    int[][] rdecaMatrika = new int[velikostJedra][velikostJedra];
 			    int[][] modraMatrika = new int[velikostJedra][velikostJedra];
 			    int[][] zelenaMatrika = new int[velikostJedra][velikostJedra];
@@ -140,7 +131,6 @@ public class NakljucniEfekt {
 			    rgb = (int) ((rgb << 8) +  zelena1);
 			    rgb = (int) ((rgb << 8) +  modra1);	
 			    slika.setRGB(i, j, rgb);
-			
 			}
 		}
 		System.out.println(maksimum);

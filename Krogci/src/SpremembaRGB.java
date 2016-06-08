@@ -30,14 +30,10 @@ public class SpremembaRGB {
 			    rgb = (rgb << 8) + modra;
 			    
 			    slika.setRGB(i, j, rgb);
-			    
-			  
-			}
-					
-			}
+			}				
 		}
-		
-	}
+	}	
+}
 		
 
 			

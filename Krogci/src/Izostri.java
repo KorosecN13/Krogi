@@ -4,7 +4,7 @@ import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 
 public class Izostri {
-	//2. matrika je jedro, sicer se koeficient napiše drugaè
+	//2. matrika je v našem primeru jedro
 	public static double konvolucija(int[][] matrika1, int[][] matrika2, int velikostmatrike){
 		double sestevek = 0;
 		for (int i = 0; i < velikostmatrike; i++){
@@ -20,24 +20,20 @@ public class Izostri {
 		 boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
 		 WritableRaster raster = bi.copyData(null);
 		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
-		}
-	
+	}
 	
 	public static void izostri(BufferedImage slika, int vjedra){
 		int sirina = slika.getWidth();	
 		int visina = slika.getHeight();
 		int velikostJedra = vjedra;
 		int[][] jedro = {{0,-1,0},
-				 		{-1,5,-1},
-				 		{0,-1,0}};
-		BufferedImage kopija = Kopija(slika);
-		double maksimum = 0;
-				
+				 		 {-1,5,-1},
+				 		 {0,-1,0}};
+		BufferedImage kopija = Kopija(slika);		
 		for(int i = (velikostJedra-1)/2; i < sirina-(velikostJedra-1)/2; i++){
 			for(int j = (velikostJedra-1)/2; j < visina-(velikostJedra-1)/2; j++){
-		
 			    
-			    int[][] rdecaMatrika = new int[velikostJedra][velikostJedra];
+				int[][] rdecaMatrika = new int[velikostJedra][velikostJedra];
 			    int[][] modraMatrika = new int[velikostJedra][velikostJedra];
 			    int[][] zelenaMatrika = new int[velikostJedra][velikostJedra];
 			    
@@ -53,19 +49,11 @@ public class Izostri {
 			    double rdeca1 = konvolucija(rdecaMatrika, jedro, 3);
 			    double modra1 = konvolucija(modraMatrika, jedro, 3);
 			    double zelena1 = konvolucija(zelenaMatrika, jedro, 3);
-			    if (rdeca1 > maksimum){
-			    	maksimum = rdeca1;}
-			    if (zelena1 > maksimum){
-			    	maksimum = zelena1;}
-			    if (modra1 > maksimum){
-			    	maksimum = modra1;}
 			    int rgb = (int) Math.max(0,Math.min(255, rdeca1));
 			    rgb = (int) ((rgb << 8) + Math.max(0,Math.min(255, zelena1)));
 			    rgb = (int) ((rgb << 8) + Math.max(0,Math.min(255, modra1)));	
 			    slika.setRGB(i, j, rgb);
 			}
 		}
-		System.out.println(maksimum);
 	}
-	
 }
